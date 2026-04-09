@@ -17,6 +17,8 @@ npm run dev:api
 
 백엔드는 부팅 시 Prisma가 PostgreSQL에 연결합니다. DB 없이 빌드만 할 때는 `npm run build`만 실행하면 됩니다.
 
+인증 API(`POST /auth/register`, `POST /auth/login`)를 쓰려면 `.env`에 `JWT_SECRET`도 설정하세요(예: `src/backend/.env.example` 참고).
+
 ## Ports
 - Web: `http://localhost:3000`
 - API: `http://localhost:4000/health`
