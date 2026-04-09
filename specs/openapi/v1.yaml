@@ -74,7 +74,65 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorBody"
+  /project-state:
+    get:
+      summary: Get current user's project state (SSOT)
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Current project state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectState"
+        "401":
+          description: Missing or invalid bearer token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+    put:
+      summary: Replace project state with optimistic concurrency
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutProjectStateRequest"
+      responses:
+        "200":
+          description: State updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectState"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "401":
+          description: Missing or invalid bearer token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "409":
+          description: stateVersion mismatch
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     UserPublic:
       type: object
@@ -135,3 +193,60 @@ components:
           type: string
         message:
           type: string
+    ProjectState:
+      type: object
+      required:
+        - stateVersion
+        - approvedRequirements
+        - rejectedDecisions
+        - openQuestions
+        - currentApiSpecs
+      properties:
+        stateVersion:
+          type: integer
+          minimum: 1
+        approvedRequirements:
+          type: array
+          items:
+            type: string
+        rejectedDecisions:
+          type: array
+          items:
+            type: string
+        openQuestions:
+          type: array
+          items:
+            type: string
+        currentApiSpecs:
+          type: array
+          items:
+            type: string
+    PutProjectStateRequest:
+      type: object
+      required:
+        - stateVersion
+        - approvedRequirements
+        - rejectedDecisions
+        - openQuestions
+        - currentApiSpecs
+      properties:
+        stateVersion:
+          type: integer
+          minimum: 1
+          description: Expected current version; server increments on success
+        approvedRequirements:
+          type: array
+          items:
+            type: string
+        rejectedDecisions:
+          type: array
+          items:
+            type: string
+        openQuestions:
+          type: array
+          items:
+            type: string
+        currentApiSpecs:
+          type: array
+          items:
+            type: string

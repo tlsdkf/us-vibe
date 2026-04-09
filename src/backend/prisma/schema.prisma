@@ -8,10 +8,24 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  passwordHash String   @map("password_hash")
-  createdAt    DateTime @default(now()) @map("created_at")
+  id           String         @id @default(uuid())
+  email        String         @unique
+  passwordHash String         @map("password_hash")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  projectState ProjectState?
 
   @@map("users")
+}
+
+model ProjectState {
+  id                     String   @id @default(uuid())
+  userId                 String   @unique @map("user_id")
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stateVersion           Int      @default(1) @map("state_version")
+  approvedRequirements   String[] @default([]) @map("approved_requirements")
+  rejectedDecisions      String[] @default([]) @map("rejected_decisions")
+  openQuestions          String[] @default([]) @map("open_questions")
+  currentApiSpecs        String[] @default([]) @map("current_api_specs")
+
+  @@map("project_states")
 }

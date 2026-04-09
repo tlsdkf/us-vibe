@@ -9,3 +9,14 @@ export interface AuthResponse {
   user: User;
   accessToken: string;
 }
+
+/** SSOT project state (API shape; matches `.ai/project-state.md` fields). */
+export interface ProjectState {
+  stateVersion: number;
+  approvedRequirements: string[];
+  rejectedDecisions: string[];
+  openQuestions: string[];
+  currentApiSpecs: string[];
+}
+
+export type PutProjectStateRequest = ProjectState;

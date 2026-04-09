@@ -24,5 +24,6 @@ npm run dev:api
 - API: `http://localhost:4000/health`
 
 ## Documents
+- **새 AI 에이전트 / 작업 이어가기:** `docs/ai-agent-handoff.md`
 - Product/Sprint plan: `docs/plan.md`
 - Full architecture plan: `docs/ai_협업_에이전트_설계_10198352.plan.md`
