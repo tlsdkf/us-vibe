@@ -2,10 +2,14 @@
   "name": "us-vibe",
   "version": "0.1.0",
   "private": true,
-  "workspaces": ["apps/*"],
+  "workspaces": [
+    "apps/*",
+    "src/backend"
+  ],
   "scripts": {
     "dev:web": "npm run dev -w web",
-    "build": "npm run build -w web",
-    "lint": "npm run lint -w web"
+    "dev:api": "npm run start:dev -w backend",
+    "build": "npm run build -w web && npm run build -w backend",
+    "lint": "npm run lint -w web && npm run lint -w backend"
   }
 }

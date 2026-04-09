@@ -4,17 +4,22 @@ AI 멀티 에이전트 기반 협업 학습 시뮬레이터 MVP를 위한 모노
 
 ## Stack
 - Frontend: Next.js (`apps/web`)
-- Backend: 다음 커밋에서 `src/backend`(NestJS)가 추가됩니다.
+- Backend: NestJS (`src/backend`)
 - Workspace: npm workspaces (single repository)
 
 ## Quick Start
 ```bash
 npm install
+cp src/backend/.env.example src/backend/.env   # set DATABASE_URL for PostgreSQL
 npm run dev:web
+npm run dev:api
 ```
+
+백엔드는 부팅 시 Prisma가 PostgreSQL에 연결합니다. DB 없이 빌드만 할 때는 `npm run build`만 실행하면 됩니다.
 
 ## Ports
 - Web: `http://localhost:3000`
+- API: `http://localhost:4000/health`
 
 ## Documents
 - Product/Sprint plan: `docs/plan.md`

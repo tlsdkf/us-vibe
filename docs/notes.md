@@ -5,7 +5,7 @@
 - 협업 목표는 코드량이 아니라 합의/리뷰/재작업 루프 경험이다.
 
 ## Backend Notes
-- Nest API는 다음 커밋에서 `src/backend`로 추가됩니다. 이후 변경 시 `specs/api-contract.md`와 `specs/openapi/*.yaml`을 동시에 갱신한다.
+- Nest API 패키지: `src/backend`. 변경 시 `specs/api-contract.md`와 `specs/openapi/*.yaml`을 동시에 갱신한다.
 
 ## Frontend Notes
 - FE 제안은 API 계약 범위 내에서만 생성한다.
