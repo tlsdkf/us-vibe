@@ -18,3 +18,19 @@ paths:
                     type: boolean
                   service:
                     type: string
+  /health/db:
+    get:
+      summary: PostgreSQL connectivity check
+      responses:
+        "200":
+          description: Database reachability result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  database:
+                    type: string
+                    enum: [up, down]
