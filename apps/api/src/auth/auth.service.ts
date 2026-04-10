@@ -1,4 +1,4 @@
-import { User, UsersDataService } from "@us-vibe/backend";
+import { RevokedTokenStore, User, UsersDataService } from "@us-vibe/backend";
 import {
   BadRequestException,
   ConflictException,
@@ -13,7 +13,8 @@ import type { JwtPayload } from "./auth.types";
 export class AuthService {
   constructor(
     private readonly usersData: UsersDataService,
-    private readonly jwt: JwtService
+    private readonly jwt: JwtService,
+    private readonly revokedTokens: RevokedTokenStore
   ) {}
 
   async register(
@@ -34,6 +35,15 @@ export class AuthService {
       }
       throw error;
     }
+  }
+
+  async revokeAccessToken(accessToken: string): Promise<void> {
+    const decoded = await this.jwt.verifyAsync<JwtPayload & { exp: number }>(
+      accessToken
+    );
+    const now = Math.floor(Date.now() / 1000);
+    const ttl = Math.max(decoded.exp - now, 1);
+    await this.revokedTokens.revoke(decoded.jti, ttl);
   }
 
   async login(

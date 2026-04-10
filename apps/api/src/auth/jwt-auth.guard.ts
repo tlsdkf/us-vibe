@@ -1,3 +1,4 @@
+import { RevokedTokenStore } from "@us-vibe/backend";
 import {
   type CanActivate,
   type ExecutionContext,
@@ -10,7 +11,10 @@ import type { JwtPayload } from "./auth.types";
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly jwt: JwtService) {}
+  constructor(
+    private readonly jwt: JwtService,
+    private readonly revokedTokens: RevokedTokenStore
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
@@ -29,6 +33,12 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException({
         code: "AUTH_INVALID_TOKEN",
         message: "Invalid or expired access token"
+      });
+    }
+    if (await this.revokedTokens.isRevoked(payload.jti)) {
+      throw new UnauthorizedException({
+        code: "TOKEN_REVOKED",
+        message: "Access token has been revoked"
       });
     }
     (request as Request & { user: JwtPayload }).user = payload;

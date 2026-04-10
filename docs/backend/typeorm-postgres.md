@@ -7,10 +7,10 @@ The API uses [`@nestjs/typeorm`](https://docs.nestjs.com/techniques/database) in
 ## Local database
 
 1. Copy [`.env.example`](../../.env.example) to `.env` at the repo root (or export variables in your shell).
-2. Start PostgreSQL:
+2. Start PostgreSQL (and optional Redis for JWT denylist):
 
    ```bash
-   docker compose up -d postgres
+   docker compose up -d postgres redis
    ```
 
 3. Apply migrations (from repo root, workspace `src/backend`):

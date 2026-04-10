@@ -3,7 +3,7 @@
 ## Scope
 
 - Email and password registration and login.
-- JWT access tokens with `jti` (reserved for optional server-side invalidation in a later Redis-backed step).
+- JWT access tokens with `jti` for optional server-side invalidation (see [Redis usage](redis-usage.md)).
 - Profile read via `GET /users/me`.
 
 ## HTTP
@@ -12,6 +12,7 @@
 |--------|------|--------|
 | POST | `/auth/register` | 201, body `{ email, password }`, returns `{ accessToken }`. |
 | POST | `/auth/login` | 200, same body shape, returns `{ accessToken }`. |
+| POST | `/auth/logout` | `Authorization: Bearer <accessToken>`, returns `{ ok: true }`; revokes `jti` in Redis when `REDIS_URL` is set (see [redis-usage](redis-usage.md)). |
 | GET | `/users/me` | `Authorization: Bearer <accessToken>`, returns `{ id, email, createdAt }`. |
 
 OpenAPI: [`specs/openapi/v1.yaml`](../../specs/openapi/v1.yaml).

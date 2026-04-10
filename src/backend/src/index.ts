@@ -7,4 +7,5 @@ export function getBackendPackageLabel(): string {
 export { AppDataSource, createDataSourceOptions } from "./data-source";
 export { CollaborationEvent, typeOrmEntities, User } from "./entities";
 export { CollaborationEventsDataService } from "./collaboration/collaboration-events-data.service";
+export { RevokedTokenStore } from "./redis/revoked-token.store";
 export { UsersDataService } from "./users/users-data.service";
