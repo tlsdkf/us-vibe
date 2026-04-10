@@ -5,4 +5,5 @@ export function getBackendPackageLabel(): string {
 }
 
 export { AppDataSource, createDataSourceOptions } from "./data-source";
-export { typeOrmEntities } from "./entities";
+export { typeOrmEntities, User } from "./entities";
+export { UsersDataService } from "./users/users-data.service";
