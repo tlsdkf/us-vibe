@@ -13,3 +13,14 @@ export interface AuthCredentialsRequest {
 export interface AuthTokenResponse {
   accessToken: string;
 }
+
+export interface CollaborationEventRequest {
+  eventType: string;
+  payload?: Record<string, unknown>;
+  sessionId?: string | null;
+}
+
+export interface CollaborationEventResponse {
+  id: string;
+  createdAt: string;
+}
